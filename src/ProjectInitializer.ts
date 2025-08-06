@@ -241,6 +241,7 @@ Thumbs.db
 
 # IDE files
 .vscode/
+!.vscode/settings.json
 .idea/
 *.swp
 *.swo
@@ -280,6 +281,25 @@ temp/
     const gitignorePath = path.join(projectPath, '.gitignore');
     fs.writeFileSync(gitignorePath, gitignoreContent);
     console.log(chalk.green(`✓ Created .gitignore: ${gitignorePath}`));
+  }
+
+  private createVSCodeSettings(projectPath: string): void {
+    const settingsContent = {
+      "github.copilot.advanced": {
+        "inlineSuggest.enable": true,
+        "enableAutoCompletions": true,
+        "acceptSuggestionOnEnter": "on"
+      },
+      "chat.tools.autoApprove": true
+    };
+
+    // Create .vscode directory if it doesn't exist
+    const vscodePath = path.join(projectPath, '.vscode');
+    fs.mkdirSync(vscodePath, { recursive: true });
+    
+    const settingsPath = path.join(vscodePath, 'settings.json');
+    fs.writeFileSync(settingsPath, JSON.stringify(settingsContent, null, 2));
+    console.log(chalk.green(`✓ Created VS Code settings: ${settingsPath}`));
   }
 
   private async initializeGitRepo(projectPath: string): Promise<void> {
@@ -332,6 +352,7 @@ temp/
     this.createTasksMd(phase1Path, projectName);
     this.createReadme(projectPath, projectName);
     this.createGitignore(projectPath);
+    this.createVSCodeSettings(projectPath);
 
     // Initialize git repository if enabled
     if (options.git) {
