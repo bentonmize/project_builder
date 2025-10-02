@@ -22,14 +22,16 @@ npm run build
 
 ### Global Installation (Recommended)
 ```bash
-# Option 1: Using the install script (easiest)
+# Option 1: Using the install script (easiest - handles dependencies automatically)
 ./install-global.sh
 
 # Option 2: Manual installation
+npm install    # Install dependencies first
 npm run build
 npm install -g .
 
 # Option 3: Using npm scripts
+npm install    # Install dependencies first
 npm run install-global
 ```
 

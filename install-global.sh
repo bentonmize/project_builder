@@ -3,6 +3,19 @@
 
 echo "🚀 Installing Project Initializer globally..."
 
+# Check if node_modules exists and install dependencies if needed
+if [ ! -d "node_modules" ] || [ ! -f "node_modules/.package-lock.json" ]; then
+    echo "📦 Installing dependencies..."
+    npm install
+    
+    if [ $? -ne 0 ]; then
+        echo "❌ Dependency installation failed. Please check your npm configuration and try again."
+        exit 1
+    fi
+else
+    echo "✅ Dependencies already installed."
+fi
+
 # Build the project
 echo "📦 Building TypeScript..."
 npm run build
